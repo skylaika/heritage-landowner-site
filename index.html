@@ -2,39 +2,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Heritage Landowner Search</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<title>Heritage Landowner Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/aos.css">
 </head>
 <body>
-<header>
-  <nav class="navbar">
-    <div class="logo">Heritage Landowner Search</div>
-    <ul>
-      <li><a href="#search">Search</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#claim">How To Make A Claim</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+
+<header class="navbar" data-aos="fade-down">
+  <div class="logo">Heritage Landowner Search</div>
+  <nav>
+    <a href="#search">Search</a>
+    <a href="#about">About</a>
+    <a href="#claim">How To Make A Claim</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-text">
-    <h1>Find Original Landowner</h1>
-    <p>Search our database to discover if your ancestors were original owners of land later reassigned by the government.</p>
-  </div>
+<section class="hero" data-aos="fade-up">
+  <h1>Find Original Landowner</h1>
+  <p>Search our database to discover if your ancestors were original landowners.</p>
 </section>
 
-<section id="search" class="search-section">
+<section id="search" class="search-section" data-aos="fade-up">
   <h2>Search Database</h2>
-  <input id="searchBox" type="text" placeholder="Search tips: Try variations (e.g., 'J Smith', 'Jonathan Smith')">
+  <input id="searchBox" type="text" placeholder="Try variations: 'J Smith', 'Jonathan Smith'">
   <div id="results"></div>
 </section>
 
-<section id="about" class="about-section">
+<section id="about" class="about-section" data-aos="fade-up">
   <h2>About This Service</h2>
   <div class="columns">
     <div><h3>Our Mission</h3><p>XYZ helps descendants reconnect...</p></div>
@@ -43,34 +41,31 @@
   </div>
 </section>
 
-<section id="claim" class="claim-section">
+<section id="claim" class="claim-section" data-aos="fade-up">
   <h2>How To Make A Claim</h2>
   <ol class="timeline">
-    <li><strong>Search Our Database</strong></li>
-    <li><strong>Submit Information Request</strong></li>
-    <li><strong>Verification Process</strong></li>
-    <li><strong>Receive Detailed Information</strong></li>
-    <li><strong>Guidance on Next Steps</strong></li>
-    <li><strong>Ongoing Support</strong></li>
+    <li>Search Our Database</li>
+    <li>Submit Information Request</li>
+    <li>Verification Process</li>
+    <li>Receive Detailed Information</li>
+    <li>Guidance on Next Steps</li>
+    <li>Ongoing Support</li>
   </ol>
 </section>
 
-<section id="faq" class="faq-section">
+<section id="faq" class="faq-section" data-aos="fade-up">
   <h2>Frequently Asked Questions</h2>
   <div class="faq-item"><button>What information do I need?</button><div class="answer">You only need the name...</div></div>
-  <div class="faq-item"><button>Is there a cost?</button><div class="answer">No, it's free...</div></div>
+  <div class="faq-item"><button>Is there a cost?</button><div class="answer">No, this service is free...</div></div>
 </section>
 
-<footer id="contact">
-  <div class="footer-columns">
-    <div><h4>Contact XYZ</h4><p>Email: xyzinfo@gmail.com</p></div>
-    <div><h4>Quick Links</h4><p>Search, About...</p></div>
-    <div><h4>Legal</h4><p>Privacy Policy...</p></div>
-  </div>
-  <div class="bottom-bar">© 2025 XYZ PTY Limited. All rights reserved.</div>
+<footer id="contact" data-aos="fade-up">
+  <p>Contact: xyzinfo@gmail.com</p>
 </footer>
 
+<script src="js/aos.js"></script>
 <script src="js/fuzzy.js"></script>
 <script src="js/script.js"></script>
+<script>AOS.init();</script>
 </body>
 </html>

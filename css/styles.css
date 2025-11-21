@@ -1,12 +1,11 @@
 
-body { margin:0; font-family:Arial, sans-serif; color:#1A1A1A; }
-.navbar { display:flex; justify-content:space-between; padding:1rem; background:white; position:sticky; top:0; }
-.navbar ul { list-style:none; display:flex; gap:1rem; }
-.hero { background:#034BA9; color:white; padding:4rem 1rem; text-align:center; }
-.search-section { padding:2rem; }
-#results .card { background:#F7F7F7; padding:1rem; margin:0.5rem 0; border-radius:8px; cursor:pointer; }
-.columns { display:flex; gap:1rem; }
-.timeline li { margin:1rem 0; }
-.faq-item button { width:100%; text-align:left; padding:1rem; background:#E6E6E6; border:none; }
-.answer { display:none; padding:1rem; background:#F7F7F7; }
-footer { background:#2E2E2E; color:white; padding:2rem; }
+body {margin:0;font-family:Arial, sans-serif; background:#fafafa;}
+.navbar {display:flex;justify-content:space-between;padding:1rem;background:#fff;position:sticky;top:0;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.navbar a {margin:0 0.5rem;text-decoration:none;color:#034BA9;font-weight:bold;}
+.hero {background:#034BA9;color:white;text-align:center;padding:4rem 1rem;}
+.search-section {padding:2rem;}
+#results .card {background:white;margin:0.5rem 0;padding:1rem;border-radius:8px;cursor:pointer;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+.columns {display:flex;gap:1rem;padding:2rem;}
+.timeline li {margin:1rem 0;}
+.faq-item button {width:100%;padding:1rem;background:#E6E6E6;border:none;text-align:left;}
+.answer {display:none;padding:1rem;background:#fff;}

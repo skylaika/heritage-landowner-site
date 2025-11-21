@@ -23,9 +23,13 @@ function search(){
     let div=document.createElement('div');
     div.className='card';
     div.textContent=item.name;
-    div.onclick=()=>{ const jotformURL = "https://form.jotform.com/253242615800045"; 
-window.location.href = `${jotformURL}?matchedName=${encodeURIComponent(item.name)}`;
- };
+    div.onclick=()=>{ 
+      const base='https://form.jotform.com/253242615800045';
+      const url = base 
+        + '?matchedName=' + encodeURIComponent(item.name)
+        + '&relevantAncestor=' + encodeURIComponent(item.name);
+      window.location.href = url;
+    };
     res.appendChild(div);
   });
 }
