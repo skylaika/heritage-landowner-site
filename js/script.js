@@ -1,10 +1,9 @@
 /* ---------------------------------------------------------
-   Advanced Genealogy Search System
-   - Multi-word smart search
-   - Tokenized fuzzy matching
-   - Weighted scoring
-   - Substring & starts-with priority
-   - Fuzzy threshold (max dist = 2)
+   High-Precision Genealogy Search (Strict Mode)
+   - Multi-word tokenized matching
+   - Max fuzzy distance = 1
+   - Very strict thresholds
+   - "No matches found" support
 ---------------------------------------------------------- */
 
 let names = [];
@@ -28,9 +27,9 @@ function levenshtein(a, b) {
       matrix[0][j] = j;
 
       matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1, // deletion
-        matrix[i][j - 1] + 1, // insertion
-        matrix[i - 1][j - 1] + (b.charAt(i - 1) === a.charAt(j - 1) ? 0 : 1) // substitution
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + (b[j - 1] === a[j - 1] ? 0 : 1)
       );
     }
   }
@@ -38,53 +37,53 @@ function levenshtein(a, b) {
   return matrix[b.length][a.length];
 }
 
-/* --------- Token-based match scoring --------- */
+/* --------- Strict scoring system --------- */
 function scoreName(query, fullname) {
   const q = query.toLowerCase().trim();
   const name = fullname.toLowerCase().trim();
 
-  let totalScore = 999; // worst (large number = bad)
-  let matched = false;
-
-  // Exact match
+  // Full exact match
   if (name === q) {
     return { matched: true, score: 0 };
   }
 
-  // Tokenize
+  // Tokenize both sides
   const qTokens = q.split(/\s+/);
   const nTokens = name.split(/\s+/);
 
   let score = 0;
+  let matchedAny = false;
 
   for (let qt of qTokens) {
     let bestTokenScore = 999;
+
     for (let nt of nTokens) {
-      // starts-with match (strong)
+      // Very strong start-with match
       if (nt.startsWith(qt)) {
         bestTokenScore = Math.min(bestTokenScore, 1);
       }
 
-      // substring match
+      // Substring match
       if (nt.includes(qt)) {
         bestTokenScore = Math.min(bestTokenScore, 2);
       }
 
-      // fuzzy match (levenshtein)
+      // Very strict fuzzy match (max distance = 1)
       const dist = levenshtein(qt, nt);
-      if (dist <= 2) {
+      if (dist <= 1) {
         bestTokenScore = Math.min(bestTokenScore, 3 + dist);
       }
     }
 
+    // Must match at least one token strongly
     if (bestTokenScore < 999) {
-      matched = true;
+      matchedAny = true;
     }
 
     score += bestTokenScore;
   }
 
-  return { matched, score };
+  return { matched: matchedAny, score };
 }
 
 /* --------- Main Search --------- */
@@ -93,22 +92,31 @@ function search() {
   const res = document.getElementById("results");
   res.innerHTML = "";
 
-  if (q.length < 2) return; // don't show results too early
+  if (q.length < 2) return;
 
   const results = [];
 
   for (let name of names) {
     const s = scoreName(q, name);
-    if (s.matched && s.score < 10) {
-      // threshold keeps results clean
+
+    // Very strict cutoff
+    if (s.matched && s.score <= 6) {
       results.push({ name, score: s.score });
     }
   }
 
-  // Sort by weighted score
+  // Sort results by strict quality score
   results.sort((a, b) => a.score - b.score);
 
   const top = results.slice(0, 10);
+
+  if (top.length === 0) {
+    const none = document.createElement("div");
+    none.className = "card";
+    none.textContent = "No matches found. Try another spelling.";
+    res.appendChild(none);
+    return;
+  }
 
   for (let item of top) {
     const div = document.createElement("div");
@@ -131,11 +139,10 @@ function search() {
   }
 }
 
-/* --------- Event Listeners --------- */
+/* --------- FAQ Accordion + Search Input Binding --------- */
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("searchBox").addEventListener("input", search);
 
-  // FAQ Accordion
   document.querySelectorAll(".faq-item button").forEach((btn) => {
     btn.addEventListener("click", () => {
       const ans = btn.nextElementSibling;
