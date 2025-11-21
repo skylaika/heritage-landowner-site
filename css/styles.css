@@ -1,0 +1,12 @@
+
+body { margin:0; font-family:Arial, sans-serif; color:#1A1A1A; }
+.navbar { display:flex; justify-content:space-between; padding:1rem; background:white; position:sticky; top:0; }
+.navbar ul { list-style:none; display:flex; gap:1rem; }
+.hero { background:#034BA9; color:white; padding:4rem 1rem; text-align:center; }
+.search-section { padding:2rem; }
+#results .card { background:#F7F7F7; padding:1rem; margin:0.5rem 0; border-radius:8px; cursor:pointer; }
+.columns { display:flex; gap:1rem; }
+.timeline li { margin:1rem 0; }
+.faq-item button { width:100%; text-align:left; padding:1rem; background:#E6E6E6; border:none; }
+.answer { display:none; padding:1rem; background:#F7F7F7; }
+footer { background:#2E2E2E; color:white; padding:2rem; }
