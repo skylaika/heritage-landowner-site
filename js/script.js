@@ -23,7 +23,9 @@ function search(){
     let div=document.createElement('div');
     div.className='card';
     div.textContent=item.name;
-    div.onclick=()=>{ window.location.href='https://form.jotform.com'; };
+    div.onclick=()=>{ const jotformURL = "https://form.jotform.com/253242615800045"; 
+window.location.href = `${jotformURL}?matchedName=${encodeURIComponent(item.name)}`;
+ };
     res.appendChild(div);
   });
 }
