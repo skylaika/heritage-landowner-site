@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heritage Landowner Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">Heritage Claims</div>
+    <nav class="nav-links">
+      <a href="#search">Search</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Reconnect With Your Ancestral Landowners</h1>
+    <p class="hero-sub">Access verified historical records and discover your ancestral land connections.</p>
+    <div class="hero-buttons">
+      <a href="#search" class="btn-primary">Search Records</a>
+      <a href="#about" class="btn-secondary">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<section id="search" class="search-area">
+  <div class="search-card">
+    <label class="search-label">Search ancestor name</label>
+    <input id="searchBox" type="text" class="search-input" placeholder="Enter a name...">
+    <div id="loading" class="loading" style="display:none;">Searching…</div>
+    <div id="results" class="results"></div>
+  </div>
+</section>
+
+<footer id="contact" class="footer">
+  <div class="footer-bottom">© 2025 Heritage Claims. All rights reserved.</div>
+</footer>
+
+<script src="js/fuzzy.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
