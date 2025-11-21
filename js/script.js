@@ -1,33 +1,35 @@
-let debounceTimer;
-document.getElementById('searchBox').addEventListener('input', function() {
-  clearTimeout(debounceTimer);
-  const query = this.value.trim();
-  document.getElementById('loading').style.display = 'block';
-  debounceTimer = setTimeout(() => {
-    document.getElementById('loading').style.display = 'none';
-    runSearch(query);
-  }, 250);
+
+let names=[];
+fetch('data/names.json').then(r=>r.json()).then(d=>names=d);
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('searchBox').addEventListener('input', search);
+  document.querySelectorAll('.faq-item button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const ans=btn.nextElementSibling;
+      ans.style.display = ans.style.display==='block'?'none':'block';
+    });
+  });
 });
 
-async function runSearch(q){
-  const results = document.getElementById('results');
-  results.innerHTML = "";
-  if(!q){ results.innerHTML = ""; return; }
-
-  const matches = await window.searchNames(q);
-  if(matches.length===0){
-    results.innerHTML = "<div class='card'>No matches found.</div>";
-    return;
-  }
-
-  matches.forEach(name => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.textContent = name;
-    div.onclick = ()=> {
-      const url = `https://form.jotform.com/253242615800045?matchedName=${encodeURIComponent(name)}&relevantAncestor=${encodeURIComponent(name)}`;
+function search(){
+  let q=document.getElementById('searchBox').value.toLowerCase();
+  let res=document.getElementById('results');
+  res.innerHTML='';
+  if(q.length<2) return;
+  let scored = names.map(n=>({name:n, score:levenshtein(q, n.toLowerCase())}));
+  scored.sort((a,b)=>a.score-b.score);
+  scored.slice(0,10).forEach(item=>{
+    let div=document.createElement('div');
+    div.className='card';
+    div.textContent=item.name;
+    div.onclick=()=>{ 
+      const base='https://form.jotform.com/253242615800045';
+      const url = base 
+        + '?matchedName=' + encodeURIComponent(item.name)
+        + '&relevantAncestor=' + encodeURIComponent(item.name);
       window.location.href = url;
     };
-    results.appendChild(div);
+    res.appendChild(div);
   });
 }
