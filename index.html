@@ -1,71 +1,178 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Heritage Landowner Search</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/aos.css">
+  <meta charset="UTF-8">
+  <title>Heritage Landowner Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-<header class="navbar" data-aos="fade-down">
-  <div class="logo">Heritage Landowner Search</div>
-  <nav>
-    <a href="#search">Search</a>
-    <a href="#about">About</a>
-    <a href="#claim">How To Make A Claim</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<!-- ================= NAVIGATION ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">Heritage Claims</div>
+    <nav class="nav-links">
+      <a href="#search">Search</a>
+      <a href="#about">About</a>
+      <a href="#claim">Process</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
 </header>
 
-<section class="hero" data-aos="fade-up">
-  <h1>Find Original Landowner</h1>
-  <p>Search our database to discover if your ancestors were original landowners.</p>
-</section>
 
-<section id="search" class="search-section" data-aos="fade-up">
-  <h2>Search Database</h2>
-  <input id="searchBox" type="text" placeholder="Try variations: 'J Smith', 'Jonathan Smith'">
-  <div id="results"></div>
-</section>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Reconnect With Your Ancestral Landowners</h1>
+    <p class="hero-sub">
+      Discover whether your ancestors were original landowners through our historical land record database.
+      Begin your journey of reconnection and heritage understanding.
+    </p>
 
-<section id="about" class="about-section" data-aos="fade-up">
-  <h2>About This Service</h2>
-  <div class="columns">
-    <div><h3>Our Mission</h3><p>XYZ helps descendants reconnect...</p></div>
-    <div><h3>How It Works</h3><p>Search our publicly accessible database...</p></div>
-    <div><h3>Privacy & Data</h3><p>We only display names...</p></div>
+    <div class="hero-buttons">
+      <a href="#search" class="btn-primary">Search Records</a>
+      <a href="#about" class="btn-secondary">Learn More</a>
+    </div>
   </div>
 </section>
 
-<section id="claim" class="claim-section" data-aos="fade-up">
-  <h2>How To Make A Claim</h2>
-  <ol class="timeline">
-    <li>Search Our Database</li>
-    <li>Submit Information Request</li>
-    <li>Verification Process</li>
-    <li>Receive Detailed Information</li>
-    <li>Guidance on Next Steps</li>
-    <li>Ongoing Support</li>
-  </ol>
+
+<!-- ================= SEARCH ================= -->
+<section id="search" class="search-area">
+  <div class="search-card">
+    <label class="search-label">Search ancestor name</label>
+    <input id="searchBox" type="text" class="search-input" placeholder="Enter a name...">
+    <div id="results" class="results"></div>
+  </div>
 </section>
 
-<section id="faq" class="faq-section" data-aos="fade-up">
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <h2>Why This Matters</h2>
+      <p>Our mission is to help descendants reconnect with the original landowners in their family history.
+        We maintain one of the most comprehensive historical records of land transfers, making this information freely accessible.</p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">50,000+</div>
+        <div class="stat-label">Historical Records</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Free Access</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">Verified</div>
+        <div class="stat-label">Archive Sources</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= PROCESS ================= -->
+<section id="claim" class="process">
+  <h2>The Claim Process</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-dot"></div>
+      <h3>1. Search Our Database</h3>
+      <p>Find your ancestor’s name using our public record index.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-dot"></div>
+      <h3>2. Request Information</h3>
+      <p>Submit a request through our online form to access historical details.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-dot"></div>
+      <h3>3. Verification</h3>
+      <p>Our team evaluates lineage documentation to confirm connection.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-dot"></div>
+      <h3>4. Receive Findings</h3>
+      <p>We provide verified historical information and further guidance.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= FAQ ================= -->
+<section id="faq" class="faq">
   <h2>Frequently Asked Questions</h2>
-  <div class="faq-item"><button>What information do I need?</button><div class="answer">You only need the name...</div></div>
-  <div class="faq-item"><button>Is there a cost?</button><div class="answer">No, this service is free...</div></div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button>What information do I need?</button>
+      <div class="faq-answer">You only need the name of your ancestor. Variations may help.</div>
+    </div>
+
+    <div class="faq-item">
+      <button>Is it free?</button>
+      <div class="faq-answer">Yes, searching and submitting requests is completely free.</div>
+    </div>
+
+    <div class="faq-item">
+      <button>How is my data protected?</button>
+      <div class="faq-answer">We only display names publicly. All other data is securely processed.</div>
+    </div>
+  </div>
 </section>
 
-<footer id="contact" data-aos="fade-up">
-  <p>Contact: xyzinfo@gmail.com</p>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact" class="footer">
+  <div class="footer-cols">
+
+    <div>
+      <h4>Contact</h4>
+      <p>Email: xyzinfo@gmail.com</p>
+      <p>Phone: (+61) 21 456 7890</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#search">Search</a>
+      <a href="#about">About</a>
+      <a href="#claim">Process</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div>
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 Heritage Claims. All rights reserved.
+  </div>
 </footer>
 
-<script src="js/aos.js"></script>
 <script src="js/fuzzy.js"></script>
 <script src="js/script.js"></script>
-<script>AOS.init();</script>
+
 </body>
 </html>
