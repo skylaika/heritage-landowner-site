@@ -1,16 +1,11 @@
 /* ---------------------------------------------------------
    Modern UI Script – Heritage Claims
-   Clean, fast, commercial-grade interactions
-   - Debounced Search
-   - FAQ accordion with transitions
-   - Dynamic search card rendering
-   - Integrated with fuzzy.js engine
+   R2 Upgrade: navbar shrink, back-to-top, counters, shimmer
 ---------------------------------------------------------- */
 
-/* ----------- CONFIG ----------- */
 const FORM_URL = "https://form.jotform.com/253242615800045";
 
-/* ----------- DEBOUNCE ----------- */
+/* ---------------- DEBOUNCE ---------------- */
 function debounce(fn, delay = 250) {
   let timer;
   return (...args) => {
@@ -19,12 +14,21 @@ function debounce(fn, delay = 250) {
   };
 }
 
-/* ---------------------------------------------------------
-   SEARCH LOGIC
----------------------------------------------------------- */
+/* ---------------- SEARCH LOGIC ---------------- */
 const searchInput = document.getElementById("searchBox");
 const resultsBox = document.getElementById("results");
 const loadingIndicator = document.getElementById("loading");
+
+function createShimmerCard() {
+  const div = document.createElement("div");
+  div.className = "card shimmer-card";
+  return div;
+}
+
+function showShimmer() {
+  resultsBox.innerHTML = "";
+  for (let i = 0; i < 3; i++) resultsBox.appendChild(createShimmerCard());
+}
 
 function renderResults(matches) {
   resultsBox.innerHTML = "";
@@ -41,11 +45,7 @@ function renderResults(matches) {
     const div = document.createElement("div");
     div.className = "card";
     div.textContent = item.name;
-
-    div.onclick = () => {
-      window.location.href = FORM_URL;
-    };
-
+    div.onclick = () => window.location.href = FORM_URL;
     resultsBox.appendChild(div);
   });
 }
@@ -59,18 +59,16 @@ const performSearch = debounce(() => {
     return;
   }
 
+  showShimmer();
   loadingIndicator.style.display = "block";
 
-  // Call the fuzzy search engine provided in fuzzy.js
   const matches = window.searchNames(query);
 
   loadingIndicator.style.display = "none";
   renderResults(matches);
 });
 
-/* ---------------------------------------------------------
-   FAQ ACCORDION (Smooth Animation)
----------------------------------------------------------- */
+/* ---------------- FAQ ACCORDION ---------------- */
 function setupFAQ() {
   const items = document.querySelectorAll(".faq-item");
 
@@ -100,18 +98,71 @@ function setupFAQ() {
   });
 }
 
-/* ---------------------------------------------------------
-   ON PAGE LOAD
----------------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  setupFAQ();
+/* ---------------- SHRINKING NAV ---------------- */
+const nav = document.querySelector(".nav");
 
-  searchInput.addEventListener("input", performSearch);
+function onScrollNavbar() {
+  if (window.scrollY > 20) {
+    nav.classList.add("shrink");
+  } else {
+    nav.classList.remove("shrink");
+  }
+}
+
+/* ---------------- BACK TO TOP BUTTON ---------------- */
+const backTop = document.createElement("button");
+backTop.id = "backToTop";
+backTop.textContent = "↑";
+document.body.appendChild(backTop);
+
+backTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-/* ---------------------------------------------------------
-   MOBILE NAVIGATION
----------------------------------------------------------- */
+function toggleBackToTop() {
+  if (window.scrollY > 500) backTop.classList.add("show");
+  else backTop.classList.remove("show");
+}
+
+/* ---------------- COUNTER ANIMATION ---------------- */
+function animateCounter(el, target) {
+  let current = 0;
+  const increment = Math.ceil(target / 40);
+
+  const step = () => {
+    current += increment;
+    if (current >= target) {
+      el.textContent = target.toLocaleString() + "+";
+    } else {
+      el.textContent = current.toLocaleString();
+      requestAnimationFrame(step);
+    }
+  };
+
+  requestAnimationFrame(step);
+}
+
+function triggerCounters() {
+  document.querySelectorAll(".stat-number").forEach((el) => {
+    const text = el.textContent.replace(/[^0-9]/g, "");
+    const target = Number(text);
+    animateCounter(el, target);
+  });
+}
+
+/* ---------------- FADE-IN SECTIONS ---------------- */
+const fadeEls = document.querySelectorAll(".fade");
+
+function revealOnScroll() {
+  const trigger = window.innerHeight * 0.85;
+
+  fadeEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < trigger) el.classList.add("visible");
+  });
+}
+
+/* ---------------- MOBILE NAVIGATION ---------------- */
 const mobileBtn = document.getElementById("mobileMenuBtn");
 const mobileNav = document.getElementById("mobileNav");
 
@@ -120,21 +171,14 @@ mobileBtn.addEventListener("click", () => {
   mobileNav.classList.toggle("open");
 });
 
-/* ---------------------------------------------------------
-   FADE-IN ANIMATIONS
----------------------------------------------------------- */
-const fadeEls = document.querySelectorAll(".fade");
+/* ---------------- INITIAL LOAD ---------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  setupFAQ();
+  searchInput.addEventListener("input", performSearch);
+  window.addEventListener("scroll", onScrollNavbar);
+  window.addEventListener("scroll", toggleBackToTop);
+  window.addEventListener("scroll", revealOnScroll);
 
-function revealOnScroll() {
-  const trigger = window.innerHeight * 0.85;
-
-  fadeEls.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < trigger) {
-      el.classList.add("visible");
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
+  revealOnScroll();
+  triggerCounters();
+});
