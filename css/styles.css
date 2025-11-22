@@ -529,3 +529,71 @@ a {
   transform: translateY(0);
 }
 
+.nav {
+  transition: all 0.25s ease;
+}
+
+.nav.shrink {
+  padding: 8px 0 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.nav.shrink .logo {
+  font-size: 18px;
+}
+
+.card {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+.shimmer-card {
+  height: 48px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.shimmer-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+
+#backToTop {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #034BA9;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(3,75,169,0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 1000;
+}
+
+#backToTop.show {
+  opacity: 1;
+  transform: translateY(0);
+}
