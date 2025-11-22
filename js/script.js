@@ -108,3 +108,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   searchInput.addEventListener("input", performSearch);
 });
+
+/* ---------------------------------------------------------
+   MOBILE NAVIGATION
+---------------------------------------------------------- */
+const mobileBtn = document.getElementById("mobileMenuBtn");
+const mobileNav = document.getElementById("mobileNav");
+
+mobileBtn.addEventListener("click", () => {
+  mobileBtn.classList.toggle("active");
+  mobileNav.classList.toggle("open");
+});
+
+/* ---------------------------------------------------------
+   FADE-IN ANIMATIONS
+---------------------------------------------------------- */
+const fadeEls = document.querySelectorAll(".fade");
+
+function revealOnScroll() {
+  const trigger = window.innerHeight * 0.85;
+
+  fadeEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < trigger) {
+      el.classList.add("visible");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
