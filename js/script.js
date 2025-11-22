@@ -1,35 +1,110 @@
+/* ---------------------------------------------------------
+   Modern UI Script – Heritage Claims
+   Clean, fast, commercial-grade interactions
+   - Debounced Search
+   - FAQ accordion with transitions
+   - Dynamic search card rendering
+   - Integrated with fuzzy.js engine
+---------------------------------------------------------- */
 
-let names=[];
-fetch('data/names.json').then(r=>r.json()).then(d=>names=d);
+/* ----------- CONFIG ----------- */
+const FORM_URL = "https://form.jotform.com/253242615800045";
 
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('searchBox').addEventListener('input', search);
-  document.querySelectorAll('.faq-item button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const ans=btn.nextElementSibling;
-      ans.style.display = ans.style.display==='block'?'none':'block';
-    });
-  });
-});
+/* ----------- DEBOUNCE ----------- */
+function debounce(fn, delay = 250) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
 
-function search(){
-  let q=document.getElementById('searchBox').value.toLowerCase();
-  let res=document.getElementById('results');
-  res.innerHTML='';
-  if(q.length<2) return;
-  let scored = names.map(n=>({name:n, score:levenshtein(q, n.toLowerCase())}));
-  scored.sort((a,b)=>a.score-b.score);
-  scored.slice(0,10).forEach(item=>{
-    let div=document.createElement('div');
-    div.className='card';
-    div.textContent=item.name;
-    div.onclick=()=>{ 
-      const base='https://form.jotform.com/253242615800045';
-      const url = base 
-        + '?matchedName=' + encodeURIComponent(item.name)
-        + '&relevantAncestor=' + encodeURIComponent(item.name);
-      window.location.href = url;
+/* ---------------------------------------------------------
+   SEARCH LOGIC
+---------------------------------------------------------- */
+const searchInput = document.getElementById("searchBox");
+const resultsBox = document.getElementById("results");
+const loadingIndicator = document.getElementById("loading");
+
+function renderResults(matches) {
+  resultsBox.innerHTML = "";
+
+  if (!matches || matches.length === 0) {
+    resultsBox.innerHTML = `
+      <div class="card" style="cursor:default;opacity:0.7;">
+        No matches found.
+      </div>`;
+    return;
+  }
+
+  matches.forEach((item) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.textContent = item.name;
+
+    div.onclick = () => {
+      window.location.href = FORM_URL;
     };
-    res.appendChild(div);
+
+    resultsBox.appendChild(div);
   });
 }
+
+const performSearch = debounce(() => {
+  const query = searchInput.value.trim();
+
+  if (!query) {
+    resultsBox.innerHTML = "";
+    loadingIndicator.style.display = "none";
+    return;
+  }
+
+  loadingIndicator.style.display = "block";
+
+  // Call the fuzzy search engine provided in fuzzy.js
+  const matches = window.searchNames(query);
+
+  loadingIndicator.style.display = "none";
+  renderResults(matches);
+});
+
+/* ---------------------------------------------------------
+   FAQ ACCORDION (Smooth Animation)
+---------------------------------------------------------- */
+function setupFAQ() {
+  const items = document.querySelectorAll(".faq-item");
+
+  items.forEach((item) => {
+    const button = item.querySelector(".faq-btn");
+    const answer = item.querySelector(".faq-answer");
+
+    answer.style.display = "none";
+    answer.style.maxHeight = "0px";
+    answer.style.overflow = "hidden";
+    answer.style.transition = "max-height 0.25s ease";
+
+    button.addEventListener("click", () => {
+      const isOpen = answer.style.maxHeight !== "0px";
+
+      document.querySelectorAll(".faq-answer").forEach((other) => {
+        other.style.maxHeight = "0px";
+      });
+
+      if (!isOpen) {
+        answer.style.display = "block";
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      } else {
+        answer.style.maxHeight = "0px";
+      }
+    });
+  });
+}
+
+/* ---------------------------------------------------------
+   ON PAGE LOAD
+---------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  setupFAQ();
+
+  searchInput.addEventListener("input", performSearch);
+});
