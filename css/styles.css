@@ -597,3 +597,15 @@ a {
   opacity: 1;
   transform: translateY(0);
 }
+
+.search-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+  color: #034BA9;
+}
